@@ -45,14 +45,17 @@ with
 $\ \ket{u_j (t)} = \ket{u_j (t+T)}$,
   </p>
   
-where $\ \epsilon_j$ and $\ \ket{u_j (t)}$ are the $\ j$-th quasienergy and Floquet mode, respectively. Substituting it to the time-dependent Schrödinger equation will get us, 	
+where 
+$\ \epsilon_j$ and $\ \ket{u_j (t)}$ 
+are the $\ j$-th quasienergy and Floquet mode, respectively. Substituting it to the time-dependent Schrödinger equation will get us, 	
 
-
+<p align="center">
  $\ \epsilon_j \ket{u_j (t)} = [\hat{h}_{MF}(t)-i \hbar \frac{d}{dt}] \ket{u_j (t)}$
+ </p>
  
 
-where $\ {\hat{h}}_{MF}$ represents the Hamiltonian operator of a single spin site. We call 
-$\ \hat{H}_{F}_ \equiv [\hat{h}_{MF}(t)-i\hbar\frac{d}{dt]\ket{u_j (t)}$ 
+where <p>$\ \hat{h}_{MF}$</p> represents the Hamiltonian operator of a single spin site. We call 
+$\ \hat{H}_{F}=[\hat{h}_{MF}(t)-i\hbar\frac{d}{dt}]\ket{u_j (t)}$ 
 
 as the Floquet Hamiltonian which becomes an eigenvalue problem, where \epsilon_j as the eigenvalue or quasienergy and |u_j\left(t\right)\ket as the eigenvector or Floquet mode. We only pick the quasienergies within the range of -\frac{\pi}{\omega}\le\epsilon_j\le\frac{\pi}{\omega} also known as the first Brillouin zone. The eigenvalue problem would then be transformed into the Fourier space to solve the Floquet Modes from the \left(4N+2\right)\times(4N+2) Floquet Hamiltonian matrix where N is the Fourier series cutoff.
 
