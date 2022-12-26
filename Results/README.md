@@ -44,12 +44,34 @@ The following is the comparison of the $\ \bar{M_z}$ VS $\ B_x$ plot obtained by
 <img width="252" alt="image" src="https://user-images.githubusercontent.com/103773281/209575808-36148f16-35d0-45dd-806d-a8bc9fdb9157.png">
 
   </p>
+  
+We could see that both algorithms yield a damping characteristics as we increase the value of $\ B_x$ into larger and larger value, however, the plot are not exactly the same.
+
+From here onwards, we would use the New Algorithm which numerically integrates the time-evolution operator to find the self-consistent solution of the magnetizations. This is achieved through the library in Python called [QuTiP](https://qutip.org/docs/4.1/guide/dynamics/dynamics-floquet.html). This is because the fact that 
+
+## Total Magnetization
+<p align="center">
+  
+  <img width="500" alt="image" src="https://user-images.githubusercontent.com/103773281/209577905-663cd1b6-f33c-43cb-a263-13f5bf24cc67.png">
+  <img width="333" alt="image" src="https://user-images.githubusercontent.com/103773281/209579961-fb369145-f3c2-4d39-813f-359a35d1be29.png">
+
+</p>
+
 
 ## Bloch Sphere Visualization
 Due to the difficulty of imagining how the magnetization changes with time and also how different $\ B_x$ affects the system, I tried to track the path that the magnetization vector (here being $\ <\bar{M_x}, \bar{M_y}, \bar{M_z}>$ in a unit sphere which we call as the Bloch sphere.
 
+<p align="center">
+![DDC8C45F-43EB-4D95-A0A2-D01A9949EA30_1_102_o](https://user-images.githubusercontent.com/103773281/209582578-5fb9b0c9-58fa-43e2-b1cb-d16c191cd539.jpeg)
+ </p>
+
+
 ## Winding Numbers
-To classify one of the properties of each path (different $\ B_x$), 
+To classify one of the properties of each path (different $\ B_x$), we use the following definition of the winding numbers explained in this [wikipedia](https://en.wikipedia.org/wiki/Winding_number) (for details could be seen in the frontpage [README.md](https://github.com/alexinthewonderland/transverse-ising-model/blob/main/README.md) file.
+
+From the simulations, it is observed that for all cases 
+
+
 
 
 
