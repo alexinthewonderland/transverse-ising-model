@@ -11,11 +11,23 @@ Through the Floquet theorem, to yield a periodical self-consistent solution of $
 ## Regarding Initial Guess
 We only use $\ M_z(t) = 1$ as the initial guess due to its average expected energy to have the lowest value out of many initial guess. The following shows the graph of The Average Expectation Value of the Energy vs $\ B_x$ with different initial guesses of $\ M_z(t)$
 
+<p align="center">
+  
+  <img width="254" alt="image" src="https://user-images.githubusercontent.com/103773281/209496522-c288a0ce-3e37-4332-a82c-bc669f2f9964.png">
+  
+  </p>
+
 ## Solving the Floquet Hamiltonian (Old Algorithm)
 <img width="249" alt="image" src="https://user-images.githubusercontent.com/103773281/209479197-97a73587-9fe8-44f1-aee8-a641020c71db.png">
 
 ## Integrating the time-evolution operator using QuTiP (New Algorithm)
 <img width="249" alt="image" src="https://user-images.githubusercontent.com/103773281/209479274-ede56829-d067-48ea-bc65-2565216a4c34.png">
+
+## Bloch Sphere Visualization
+Due to the difficulty of imagining how the magnetization changes with time and also how different $\ B_x$ affects the system, I tried to track the path that the magnetization vector (here being $\ <\bar{M_x}, \bar{M_y}, \bar{M_z}>$ in a unit sphere which we call as the Bloch sphere.
+
+## Winding Numbers
+To classify one of the properties of each path (different $\ B_x$)
 
 
 
