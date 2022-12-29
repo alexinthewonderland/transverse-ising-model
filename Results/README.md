@@ -1,3 +1,4 @@
+Sorry, still under construction!
 # Results and Discussions
 Through the Floquet theorem, to yield a periodical self-consistent solution of $\ M_z(t)$, the wavefunction should only consist of one Floquet mode. This is because a linear combined wavefunction with different quasienergies would produce a phase factor that annihilates the periodicity of the magnetization. Having this property, we first choose the smallest positive quasienergy and the result we obtained from the numerical iteration displays a damping of the average $\ M_z(t)$ over one period $\ \bar{M_z}$ with increasing $\ B_x$ as shown below.
 
