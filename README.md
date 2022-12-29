@@ -21,7 +21,7 @@ indicates a summation of the nearest-neighbor (NN) of the i-th spin site. This q
 Due to the mathematical complication of the NN spin coupling summation, the Mean-Field theory (MFT) or approximation lets each spin to instead feel an average field that the nearest-neighbors spins produce. Hence, in our case, the nearest neighbor summation becomes a single site summation,
 
 <p align="center">
-$\ {\hat{H}}_{MF}=-qJM_z(t) {\sum_{i}^{N}} {\hat{S}}_i^z-B_x\cos{(\omega t)}\sum_{i=1}^{N}{\hat{S}}_i^x$
+$\ {\hat{H}}_{MF}=-qJM_z(t) {\Sigma_{i}^{N}} {\hat{S}}_i^z-B_x\cos{(\omega t)}\Sigma_{i=1}^{N}{\hat{S}}_i^x$
 </p>
 
 where $\ {\hat{H}}_{MF}$ is the mean field Hamiltonian and $\ qJM_z$ is our mean field with $\ q$ as the value of how many nearest neighbors the $\ i$-th has and $\ M_z(t)$ is the magnetization in the $\ z$-axis direction. The power of mean field approximation is seen above as it reduces a many-body problem into a two-level system with its approximation. The above mean-field Hamiltonian could be derived from the Gibbs-Bogoluibov Inequality, or you could take a different route using the variational principle.
