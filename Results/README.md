@@ -22,7 +22,7 @@ We see that when $\ \frac{B_x}{qJ} = 1$ the magnetization in the $\ z$ -axis dir
 Before any numerical calculations, it is importantly noted that through the Floquet theorem, to yield a periodical self-consistent solution of $\ M_z(t)$, the wavefunction should only consist of one Floquet mode. This is because a linear combined wavefunction with different quasienergies would produce a phase factor that annihilates the periodicity of the magnetization. 
 
 ### Regarding Initial Guess
-We only use $\ M_z(t) = 1$ as the initial guess due to its average expected energy to have the lowest value out of many initial guess. The following shows the graph of The Average Expectation Value of the Energy vs $\ B_x$ with different initial guesses of $\ M_z(t)$
+It is observed that $\ M_z(t) = 1$ as the initial guess has the lowest average expected energy from other initial guesses as shown in the figure below. The following graph shows The Average Expectation Value of the Energy vs $\ B_x$ with different initial guesses of $\ M_z(t)$
 
 <p align="center">
   
@@ -31,7 +31,9 @@ We only use $\ M_z(t) = 1$ as the initial guess due to its average expected ener
   
   </p>
   
-More than the picture above, I also used many other initial guess where the amplitude of the $\ z$-axis magnetization must equal to 1 for physical reasons. Moreover, we use the previous iteration solution as the initial guess for the next $\ B_x$ that we want to study. For more details of how I performed the numerical iteration, it could be seen on the [README.md](https://github.com/alexinthewonderland/transverse-ising-model/blob/main/README.md) file at the very front under the "Iteration Method" part.
+Extending from the picture above, I also used many other initial guess where the amplitude of the $\ z$-axis magnetization must equal to 1 for physical reasons. During the numerical iterations, we further use the previous iteration solution as the initial guess for the next $\ B_x$ that we want to study. For more details of how I performed the numerical iteration, it could be seen on the [README.md](https://github.com/alexinthewonderland/transverse-ising-model/blob/main/README.md) file at the very front under the "Iteration Method" part.
+
+Having this in mind, there are now two methods that is used in solving this problem. I call the **Old Algorithm** to be the method finds the solution through the infinitely large dimension Floquet Hamiltonian, while the **New Algorithm** to be the method where the time evolution operator is instead numerically integrated using the Python library for quantum dynamics, namely [QuTiP](https://qutip.org/docs/4.1/guide/dynamics/dynamics-floquet.html).
 
 
 ### Solving the Floquet Hamiltonian (Old Algorithm)
