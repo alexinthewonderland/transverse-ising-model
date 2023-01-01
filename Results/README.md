@@ -28,7 +28,7 @@ Having this property, we first choose the smallest positive quasienergy, and the
 
 <p align="center">
 
-<img width="350" alt="image" src="https://user-images.githubusercontent.com/103773281/209478979-8e544ba3-3605-4d7a-ae42-c81f2887842f.png">
+<img width="400" alt="image" src="https://user-images.githubusercontent.com/103773281/209478979-8e544ba3-3605-4d7a-ae42-c81f2887842f.png">
 
 </p>
 
@@ -37,7 +37,7 @@ However, this method experiences a branching problem when trying to solve for th
 ### Integrating the time-evolution operator using QuTiP (New Algorithm)
 In this new method, instead of solving the Floquet Hamiltonian, we numerically integrate the time-evolution operator by the help of the [QuTiP library](https://qutip.org/docs/4.1/guide/dynamics/dynamics-floquet.html). This lets us avoid the branching problem when doing the numerical iteration and also eliminate of our worry with the high frequency uncertainty results when using the Floquet Hamiltonian method. The following discusses further about how we choose the initial guess and also its results.
 
-#### Regarding Initial Guess
+#### Regarding Initial Guess Choice
 It is observed that $\ M_z(t) = 1$ as the initial guess has the lowest average expected energy from other initial guesses as shown in the figure below. The following graph shows The Average Expectation Value of the Energy vs $\ B_x$ with different initial guesses of $\ M_z(t)$
 
 <p align="center">
@@ -50,7 +50,7 @@ It is observed that $\ M_z(t) = 1$ as the initial guess has the lowest average e
 Extending from the picture above, I also used many other initial guess where the amplitude of the $\ z$-axis magnetization must equal to 1 for physical reasons and yield a higher average energy than $\ M_z(t)=1$ as the initial guess. During the numerical iterations, we further use the previous iteration solution as the initial guess for the next $\ B_x$ that we want to study. For more details of how I performed the numerical iteration, it could be seen on the [README.md](https://github.com/alexinthewonderland/transverse-ising-model/blob/main/README.md) file at the very front under the "Iteration Method" part.
 
 
-#### Results usign the New Algorithm
+#### New Algorithm Results
 The following is the result of the average magnetization VS $\ B_x$ by using QuTiP
 
 <p align="center">
@@ -59,28 +59,32 @@ The following is the result of the average magnetization VS $\ B_x$ by using QuT
   
   </p>
  
+From the above plot it could be observed that there are certain $\ B_x$ regime where only $\ \bar{M_z}$ is non-zero while $\ \bar{M_y}$ and \ \bar{M_x}$ is zero. There are also other regime where only $\ \bar{M_y}$ is non-zero while the other magnetization from the other axes are zero. In contrast, the value of $\ \bar{M_x}$ is always zero for all $\ B_x$ value.
+
  
-The following is the comparison of the $\ \bar{M_z}$ VS $\ B_x$ plot obtained by the two methods explained previously 
+We could also compare the previous (old) method $\ \bar{M_z}$ VS $\ B_x$ plot with the new algorithm as the following shows.
 
 <p align="center">
   
-<img width="252" alt="image" src="https://user-images.githubusercontent.com/103773281/209575808-36148f16-35d0-45dd-806d-a8bc9fdb9157.png">
+<img width="400" alt="image" src="https://user-images.githubusercontent.com/103773281/209575808-36148f16-35d0-45dd-806d-a8bc9fdb9157.png">
 
   </p>
   
-We could see that both algorithms yield a damping characteristics as we increase the value of $\ B_x$ into larger and larger value, however, the plot are not exactly the same.
+It could be seen that both algorithms does not give out the same exact plots, however, they both show a damping kind of characteristics for $\ \bar{M_z}$ when we increase the value of $\ B_x$. From here on, we would always use the new method due to its reliableness and robustness.
 
-From here onwards, we would use the New Algorithm which numerically integrates the time-evolution operator to find the self-consistent solution of the magnetizations. This is achieved through the library in Python called [QuTiP](https://qutip.org/docs/4.1/guide/dynamics/dynamics-floquet.html). This is because the fact that 
 
-#### Total Magnetization
+Furthermore, looking at the "amplitude" of the average magnetization also gives us interesting characteristics as the following shows.
+
 <p align="center">
   
-  <img width="500" alt="image" src="https://user-images.githubusercontent.com/103773281/209577905-663cd1b6-f33c-43cb-a263-13f5bf24cc67.png">
+  <img width="400" alt="image" src="https://user-images.githubusercontent.com/103773281/209577905-663cd1b6-f33c-43cb-a263-13f5bf24cc67.png">
 
 </p>
 
+From the above plot, we hypothesize that the point where the amplitude of the average magnetization goes to zero indicates that the path as a functino of time of the average magnetization vector is a global path, meaning that it would cross a greater circle on the Bloch Sphere shown in the next section. Studying around this hypotheses would be one of our next big steps for the project.
 
-### Bloch Sphere Visualization
+
+#### Bloch Sphere Visualization
 Due to the difficulty of imagining how the magnetization changes with time and also how different $\ B_x$ affects the system, I tried to track the path that the magnetization vector (here being $\ <\bar{M_x}, \bar{M_y}, \bar{M_z}>$ in a unit sphere which we call as the Bloch sphere.
 
 <p align="center">
@@ -91,14 +95,15 @@ Due to the difficulty of imagining how the magnetization changes with time and a
 <img width="400" src="https://user-images.githubusercontent.com/103773281/210160073-d82f4c72-d0cf-4788-9f6a-d446da25408c.gif" />
 
 
-<p>
-  A motion of the average magnetization vector inside of a Bloch sphere for when $\ B_x = 13.7$ 
+<p align="center">
+  A motion of the average magnetization vector inside of a Bloch sphere for when $\ B_x = 0.1$, $\ B_x = 2.0$, $\ B_x = 10.8$, and $\ B_x = 13.7$
 </p>
 
  </p>
 
+Here we only show a couple of the motion on the Bloch sphere for a few $\ B_x$ value since the motion itself might not be that useful to interpret (at least I don't have any idea currently). The real usefulness comes when we project the path to a 2D plane from one of the axes $\ (x, y, z)$ and try to calculate numerically the winding number of the projected path. This is what we will discuss in the next section.
 
-### Winding Numbers
+#### Winding Numbers
 To classify one of the properties of each path (different $\ B_x$), we use the following definition of the winding numbers explained in this [wikipedia](https://en.wikipedia.org/wiki/Winding_number) (for details could be seen in the frontpage [README.md](https://github.com/alexinthewonderland/transverse-ising-model/blob/main/README.md) file.
 
 From the simulations, it is observed that the angle you project the path of the magnetization vs time in the bloch sphere determines whether the winding number is a unity or none (1 or 0). When a certain $\ B_x$ yields a none zero $\ \bar{M_z}$ then the winding the number projected from the $\ z$-axis equals to 1, while all the other projections yield a zero winding number. In contrast, when $\ \bar{M_y}$ dominates the average magnetization of the system, then the winding number projected from the $\ y$-axis is 1 while all the other projections gives us a zero winding number. A few of the result could be shown below with its projected path also visualized.
