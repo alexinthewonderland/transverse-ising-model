@@ -9,12 +9,12 @@ $\ H $
 becomes an operator as the following shows,
 
 <p align="center">
-$\ \hat{H} = -qJ\sum_{\braket{ij}}S_i^zS_{j}^z - B_x\cos(\omega t)\sum_i S_i^x$
+$\ \hat{H} = -qJ\sum_{\braket{ij}}S_i^zS_{j}^z - B(t) \sum_i S_i^x$
 </p>
 
 This is what we call as the Transverse Ising model, where J is the coupling term between the spins, B(t) represents the oscillating external magnetic field, and the notation
 $\ \braket{ij}$
-indicates a summation of the nearest-neighbor (NN) of the i-th spin site. This quantum model will enable us to explore the quantum phase transition (QPT) of system with different transverse field. In this case, we chose $\ B(t)$ to be $\ B_x\cos(\omega t)$ as the oscillating drive transverse field that affects the QPT. During the study, the following three properties of the transverse field would be tweaked and played around with the Amplitude $\ B_x$, frequency $\ \omega$, and the Polarization $\ \phi$. Our objective is then to see any phase transitions and symmetry breaking of the magnetization expectation values $\ M_z$ and $\ M_x$, as we play around with the three values mentioned above.
+indicates a summation of the nearest-neighbor (NN) of the i-th spin site. This quantum model will enable us to explore the quantum phase transition (QPT) of system with different transverse field. In this case, we chose $\ B(t)$ to be $\ B_x\cos(\omega t)$ as the oscillating drive transverse field that affects the QPT. During the study, the following three properties of the transverse field would be tweaked and played around with the Amplitude $\ B_x$, frequency $\ \omega$, and the Polarization $\ \phi$. Our objective is then to see any phase transitions and symmetry breaking of the magnetization expectation values $\ M_z$, $\ M_x$, and $\ M_y$, as we play around with the three values mentioned above. To achieve this, the following methods and formalisms are used.
 
 ## Methods that I used
 ### Mean Field Theory
