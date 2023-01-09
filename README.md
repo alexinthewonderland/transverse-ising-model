@@ -1,5 +1,14 @@
 # Driving the Transverse Ising Model with an Oscillating Field
 
+This repository consists of the following things:
+
+* [old-algo.ipynb](https://github.com/alexinthewonderland/transverse-ising-model/blob/main/old-algo.ipynb) is a Jupyter Notebook file that contains the code to find the phase diagram of the transverse ising system, visualizing the dynamics on a Bloch sphere, and also calculating the winding number using the old algorithm which finds the self-consistent solution using the Floquet Hamiltonian.
+* [qutip-algo.ipynb](https://github.com/alexinthewonderland/transverse-ising-model/blob/main/qutip-algo.ipynb). A Jupter Notebook file that is similar in usage as the [old-algo.ipynb](https://github.com/alexinthewonderland/transverse-ising-model/blob/main/old-algo.ipynb) but uses QuTiP to find the self-consistent solution for the phase diagram and other properties.
+* [old-vs-qutip-algo.ipynb](https://github.com/alexinthewonderland/transverse-ising-model/blob/main/old-vs-qutip-algo.ipynb). This file combined the two above files into one file for comparison purposes of each algorithm's result.
+* [Results]() folder. This folder contains the result that I obtained with its figures and videos from both the old and new algorithm. More details could be seen inside the folder.
+* [project-presentation.pptx](https://github.com/alexinthewonderland/transverse-ising-model/blob/main/project-presentation.pptx). Since the README.md file is not perfect/complete yet, I uploaded a presentation that I gave around November last year to give some idea about the project if the description in this GitHub is confusing. Apologize for the inconvenience!
+
+
  ## Introduction
  
 There is always a first time for everything. In this case, the Ising model is the first mathematical formalism that could be exactly solved to explain phase transitions in physical systems. It provides us with the Hamiltonian consisting of the spin interactions of the system, which encompasses properties such as ferromagnetism and the Curie temperature. Moving into the quantum realm, the spin terms become Pauli-matrices 
@@ -54,12 +63,12 @@ are the $\ j$-th quasienergy and Floquet mode, respectively. Substituting it to 
  </p>
  
 
-where <p>$\ \hat{h}_{MF}$</p> represents the Hamiltonian operator of a single spin site. We call 
+where $\ \hat{h_{MF}}$ represents the Hamiltonian operator of a single spin site. We call 
 $\ \hat{H_F}=\[\hat{h_{MF}}(t)-i\hbar\frac{d}{dt}\]\ket{u_j (t)}$ 
-
-as the Floquet Hamiltonian which becomes an eigenvalue problem, where \epsilon_j as the eigenvalue or quasienergy and |u_j\left(t\right)\ket as the eigenvector or Floquet mode. We only pick the quasienergies within the range of -\frac{\pi}{\omega}\le\epsilon_j\le\frac{\pi}{\omega} also known as the first Brillouin zone. The eigenvalue problem would then be transformed into the Fourier space to solve the Floquet Modes from the \left(4N+2\right)\times(4N+2) Floquet Hamiltonian matrix where N is the Fourier series cutoff.
+as the Floquet Hamiltonian which becomes an eigenvalue problem, where $\ \epsilon_j$  as the eigenvalue or quasienergy and $\ \ket{u_j (t)}$ as the eigenvector or Floquet mode. We only pick the quasienergies within the range of $\ -\frac{\pi}{\omega}\le\epsilon_j\le\frac{\pi}{\omega}$ also known as the first Brillouin zone. The eigenvalue problem would then be transformed into the Fourier space to solve the Floquet Modes from the $\ \(4N+2)\times(4N+2)$ Floquet Hamiltonian matrix where $\ N$ is the Fourier series cutoff.
 
 
 
 ### Fixed Point Iteration
 
+To obtain the self-consistent value of $\ M_z (t)$, we assume first that $\ M_z(t)$ itself is periodical with the same period $\ T = \frac{2\pi}{\omega}$ as the driving field. The z-axis magnetization $\ M_z$ is then transformed into the Fourier space where the objective is solving the Fourier coefficients $\ \hat{C}$ by performing numerical iteration similar as the Gauss-Seidel method using the Successive Under/Over Relaxation (SUR/SOR).
