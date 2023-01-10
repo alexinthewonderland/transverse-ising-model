@@ -41,7 +41,7 @@ Having a time-dependent but periodic Hamiltonian implies that the usual stationa
 
 
 <p align = "center">          
-$\ \ket{\psi (t)} = \sum_{j=1} \gamma_j\ \bra{\phi (t)}$
+$\ \ket{\psi (t)} = \sum_{j=1} \gamma_j\ \ket{\phi (t)}$
   </p>
          
 
