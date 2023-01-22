@@ -1,6 +1,6 @@
 # Driving the Transverse Ising Model with an Oscillating Field
 
-This repository consists of the following things:
+This repository consists of the following things (Sorry if it is still a bit messy!):
 
 * [old-algo.ipynb](https://github.com/alexinthewonderland/transverse-ising-model/blob/main/old-algo.ipynb) is a Jupyter Notebook file that contains the code to find the phase diagram of the transverse ising system, visualizing the dynamics on a Bloch sphere, and also calculating the winding number using the old algorithm which finds the self-consistent solution using the Floquet Hamiltonian.
 * [qutip-algo.ipynb](https://github.com/alexinthewonderland/transverse-ising-model/blob/main/qutip-algo.ipynb). A Jupter Notebook file that is similar in usage as the [old-algo.ipynb](https://github.com/alexinthewonderland/transverse-ising-model/blob/main/old-algo.ipynb) but uses QuTiP to find the self-consistent solution for the phase diagram and other properties.
@@ -36,6 +36,7 @@ $\ {\hat{H}}_{MF}=-qJM_z(t) {\Sigma_{i=1}^{N}} {\hat{S}}_i^z-B_x\cos{(\omega t)}
 where $\ \hat{H_{MF}}$ is the mean field Hamiltonian and $\ qJM_z$ is our mean field with $\ q$ as the value of how many nearest neighbors the $\ i$-th has and $\ M_z(t)$ is the magnetization in the $\ z$-axis direction. The power of mean field approximation is seen above as it reduces a many-body problem into a two-level system with its approximation. The above mean-field Hamiltonian could be derived from the Gibbs-Bogoluibov Inequality, or you could take a different route using the variational principle.
 
 
+
 ### Floquet Formalism
 Having a time-dependent but periodic Hamiltonian implies that the usual stationary state as an eigenvalue problem does not apply. This is where the Floquet formalism comes to the rescue. The Floquet formalism transforms the initial time-dependence from the coefficients to the eigenfunction in which they are periodical in time. The wavefunction could be written as a linear combination of the time-evolution operator eigenfunctions,
 
@@ -44,7 +45,6 @@ Having a time-dependent but periodic Hamiltonian implies that the usual stationa
 $\ \ket{\psi (t)} = \sum_{j=1} \gamma_j\ \ket{\phi (t)}$
   </p>
          
-
 
 Here, we invoke the Floquet theorem, in which we could write down $\ \ket{\phi_j (t)}$ as,
 
@@ -93,7 +93,27 @@ We see that when $\ \frac{\Omega}{qJ} = 1$ , where $\ \Omega$ is the ampltiude o
 
 
 ### Oscillating Transverse Field
-Before any numerical calculations, it is importantly noted that through the Floquet theorem, to yield a periodical self-consistent solution of $\ M_z(t)$, the wavefunction should only consist of one Floquet mode. This is because a linear combined wavefunction with different quasienergies would produce a phase factor that annihilates the periodicity of the magnetization. 
+
+Before any numerical calculations, it is importantly noted that through the Floquet theorem, to yield a periodical self-consistent solution of $\ M_z(t)$, the wavefunction should only consist of one Floquet mode. This is because a linear combined wavefunction with different quasienergies would produce a phase factor that annihilates the periodicity of the magnetization.
+
+
+#### Regarding Initial Guess Choice
+It is observed that $\ M_z(t) = 1$ using QuTiP (will be explained below) as the initial guess has the lowest average expected energy from other initial guesses as shown in the figure below. The following graph shows The Average Expectation Value of the Energy vs $\ B_x$ with different initial guesses of $\ M_z(t)$
+
+
+<p align="center">
+  
+  <img width="400" alt="image" src="https://user-images.githubusercontent.com/103773281/209558372-6f72ae95-141a-4d5b-9aa8-c9fe8bfa9620.png">
+  <img width="400" alt="image" src="https://user-images.githubusercontent.com/103773281/209496522-c288a0ce-3e37-4332-a82c-bc669f2f9964.png">
+  
+  <p align="center">
+  <strong>Figure 2. </strong>
+  </p>
+  
+  </p>
+  
+Extending from the picture above, I also used many other initial guess where the amplitude of the $\ z$-axis magnetization must equal to 1 for physical reasons and yield a higher average energy than $\ M_z(t)=1$ as the initial guess. During the numerical iterations, we further use the previous iteration solution as the initial guess for the next $\ B_x$ that we want to study, so the initial guess of the $\ i+1$-th Bx follows the previous $\ i$-th Bx converging solution. 
+
 
 #### Solving the Floquet Hamiltonian (Old Algorithm)
 The following is the plot of the average magnetization in all three axis direction $\(\bar{M_x}, \bar{M_y}, \bar{M_z})$ which is obtained by solving the Floquet Hamiltonian used in the [Floquet Hamiltonian Python file](https://github.com/alexinthewonderland/transverse-ising-model/blob/main/Floquet%20Hamiltonian%20Method%20(Old%20Algorithm).ipynb) Here, we are solving for the very large (ideally infinite) Floquet Hamiltonian matrix and then reverse engineeing it to obtain the self consistent value of $\ M_z(t)$ and its average over one period $\ \bar{M_z}$
@@ -102,56 +122,58 @@ Having this property, we first choose the smallest positive quasienergy, and the
 
 <p align="center">
 
-<img width="400" alt="image" src="https://user-images.githubusercontent.com/103773281/209478979-8e544ba3-3605-4d7a-ae42-c81f2887842f.png">
+<img width="423" alt="image" src="https://user-images.githubusercontent.com/103773281/213920294-0724c04a-46c4-4977-ac30-54bb9982a235.png">
+
+ <p align="center">
+<strong>Figure 3.</strong>The plot that shows how the average magnetization changes with the value of $\ B_x$ using the Old Algorithm. Note that the orange line and the blue line overlap with each other since both have the same value for all $\ B_x$, which is 0.
+</p>
 
 </p>
 
-However, this method experiences a branching problem when trying to solve for the converging floquet modes and quasienergies solution. This motivates us to use another method explained in the following section.
+From the above plot, we could also see that both $\ bar{M_x}$ and $\ bar{M_y}$ averages to zero for all of $\ B_x$, which makes sense since our driving oscillating field oscillates in a cosine manner that averages its magnitude to zero within one period. Nonetheless, we see that there are actually another solution during the numerical iteration, and this is shows below using QuTiP or as I call it the New Algorithm.
 
 #### Integrating the time-evolution operator using QuTiP (New Algorithm)
-In this new method, instead of solving the Floquet Hamiltonian, we numerically integrate the time-evolution operator by the help of the [QuTiP library](https://qutip.org/docs/4.1/guide/dynamics/dynamics-floquet.html). This lets us avoid the branching problem when doing the numerical iteration and also eliminate of our worry with the high frequency uncertainty results when using the Floquet Hamiltonian method. The following discusses further about how we choose the initial guess and also its results.
+In this new method, instead of solving the Floquet Hamiltonian, we numerically integrate the time-evolution operator by the help of the [QuTiP library](https://qutip.org/docs/4.1/guide/dynamics/dynamics-floquet.html). This lets us to eliminate of our worry with the high frequency uncertainty results if one uses the Floquet Hamiltonian method. 
 
-##### Regarding Initial Guess Choice
-It is observed that $\ M_z(t) = 1$ as the initial guess has the lowest average expected energy from other initial guesses as shown in the figure below. The following graph shows The Average Expectation Value of the Energy vs $\ B_x$ with different initial guesses of $\ M_z(t)$
-
-<p align="center">
-  
-  <img width="400" alt="image" src="https://user-images.githubusercontent.com/103773281/209558372-6f72ae95-141a-4d5b-9aa8-c9fe8bfa9620.png">
-  <img width="400" alt="image" src="https://user-images.githubusercontent.com/103773281/209496522-c288a0ce-3e37-4332-a82c-bc669f2f9964.png">
-  
-  </p>
-  
-Extending from the picture above, I also used many other initial guess where the amplitude of the $\ z$-axis magnetization must equal to 1 for physical reasons and yield a higher average energy than $\ M_z(t)=1$ as the initial guess. During the numerical iterations, we further use the previous iteration solution as the initial guess for the next $\ B_x$ that we want to study. For more details of how I performed the numerical iteration, it could be seen on the [README.md](https://github.com/alexinthewonderland/transverse-ising-model/blob/main/README.md) file at the very front under the "Iteration Method" part.
-
-
-##### New Algorithm Results
-The following is the result of the average magnetization VS $\ B_x$ by using QuTiP
+The following is the result of the average magnetization VS $\ B_x$ by using QuTiP,
 
 <p align="center">
   
 <img width="400" alt="image" src="https://user-images.githubusercontent.com/103773281/209568783-833c6fe0-fdd3-42b2-9dd7-b926263d8388.png">
-  
-  </p>
- 
-From the above plot it could be observed that there are certain $\ B_x$ regime where only $\ \bar{M_z}$ is non-zero while $\ \bar{M_y}$ and \ \bar{M_x}$ is zero. There are also other regime where only $\ \bar{M_y}$ is non-zero while the other magnetization from the other axes are zero. In contrast, the value of $\ \bar{M_x}$ is always zero for all $\ B_x$ value.
-
- 
-We could also compare the previous (old) method $\ \bar{M_z}$ VS $\ B_x$ plot with the new algorithm as the following shows.
 
 <p align="center">
+<strong>Figure 4.</strong>
+</p>
   
-<img width="400" alt="image" src="https://user-images.githubusercontent.com/103773281/209575808-36148f16-35d0-45dd-806d-a8bc9fdb9157.png">
-
   </p>
-  
-It could be seen that both algorithms does not give out the same exact plots, however, they both show a damping kind of characteristics for $\ \bar{M_z}$ when we increase the value of $\ B_x$. From here on, we would always use the new method due to its reliableness and robustness.
+ 
+From the above plot it could be observed that there are certain $\ B_x$ regime where only $\ \bar{M_z}$ is non-zero while $\ \bar{M_y}$ and \ \bar{M_x}$ is zero. There are also other regime where only $\ \bar{M_y}$ is non-zero while the other magnetization from the other axes are zero. In contrast, the value of $\ \bar{M_x}$ is always zero for all $\ B_x$ value. We also observe the same kind of damping to the system on average as we increase the value of $\ B_x$ as the Old Algorithm also does.
 
+Nonetheless, this new result is starkingly different with the result obtained from the Old Algorithm using the Floquet Hamiltonian. However, further investigation showed us that this difference is due to two possible solutions from the numerical iteration as showin in the figure below. 
+
+<p align="center">
+
+<img width="400" alt="image" src="https://user-images.githubusercontent.com/103773281/213931943-ef001a90-5fe7-4bcf-9114-2a37d220fb79.png">
+
+<p align="center">
+<strong>Figure 5.</strong> Plot of +ve quasienergy VS $\ B_x$ with two different algorithms (the orange and blue plots), and on the lower part of the plot contains the plot of average magnetization in the $\ z$-axis for both algorithms as well as a function of $\ B_x$.
+</p>
+
+</p>
+
+The above plot shows that there are some regions where the numerical iteration gives us the same quasienergy result for both algorithms, however, there are also some regions where suddenly the quasienergy values differs from one another. Looking further into the regions with different quasienergies, it is observed that the average Mz value are also different from one another, while when the quasienergy values are the same, the values of the average Mz is also the same. This invites us to conclude that there are two solutions possible during the numerical calculations. <strong>As a future plan</strong>, I would like to try to compare the average energy over one period value using both algorithms in those regions where the quasienergy solution differs.
+
+  
 
 Furthermore, looking at the "amplitude" of the average magnetization also gives us interesting characteristics as the following shows.
 
 <p align="center">
   
   <img width="400" alt="image" src="https://user-images.githubusercontent.com/103773281/209577905-663cd1b6-f33c-43cb-a263-13f5bf24cc67.png">
+  
+  <p align="center">
+  <strong>Figure 6.</strong>
+  </p>
 
 </p>
 
@@ -170,7 +192,7 @@ Due to the difficulty of imagining how the magnetization changes with time and a
 
 
 <p align="center">
-  A motion of the average magnetization vector inside of a Bloch sphere for when $\ B_x = 0.1$, $\ B_x = 2.0$, $\ B_x = 10.8$, and $\ B_x = 13.7$
+  <strong>Figure 7. </strong>A motion of the average magnetization vector inside of a Bloch sphere for when $\ B_x = 0.1$, $\ B_x = 2.0$, $\ B_x = 10.8$, and $\ B_x = 13.7$
 </p>
 
  </p>
@@ -178,12 +200,15 @@ Due to the difficulty of imagining how the magnetization changes with time and a
 Here we only show a couple of the motion on the Bloch sphere for a few $\ B_x$ value since the motion itself might not be that useful to interpret (at least I don't have any idea currently). The real usefulness comes when we project the path to a 2D plane from one of the axes $\ (x, y, z)$ and try to calculate numerically the winding number of the projected path. This is what we will discuss in the next section.
 
 ##### Winding Numbers
-To classify one of the properties of each path (different $\ B_x$), we use the following definition of the winding numbers explained in this [wikipedia](https://en.wikipedia.org/wiki/Winding_number) (for details could be seen in the frontpage [README.md](https://github.com/alexinthewonderland/transverse-ising-model/blob/main/README.md) file.
+To classify one of the properties of each path (different $\ B_x$), we use the following definition of the winding numbers explained in this [wikipedia](https://en.wikipedia.org/wiki/Winding_number) article (more details coming!).
 
 From the simulations, it is observed that the angle you project the path of the magnetization vs time in the bloch sphere determines whether the winding number is a unity or none (1 or 0). When a certain $\ B_x$ yields a none zero $\ \bar{M_z}$ then the winding the number projected from the $\ z$-axis equals to 1, while all the other projections yield a zero winding number. In contrast, when $\ \bar{M_y}$ dominates the average magnetization of the system, then the winding number projected from the $\ y$-axis is 1 while all the other projections gives us a zero winding number. A few of the result could be shown below with its projected path also visualized.
 
 
 
+## Note
+
+If you found any mistakes or questions that you would like to assert, feel free to contact me on makurniawan@connect.ust.hk, I am more than happy to reply and fix it!
 
 
 
