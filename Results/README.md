@@ -1,4 +1,3 @@
-Sorry, still under construction!
 # Results and Discussions
 
 ## Static Transverse Field 
